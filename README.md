@@ -179,6 +179,67 @@ Instantiate multiple `OrderBook` instances and route orders through a single `Ma
 
 ---
 
+## Benchmark Results
+
+### Run Configuration
+- Duration: 60 seconds
+- Agent: Q-Learning Market Maker (alpha=0.01, gamma=0.99, eps=0.10)
+- Build: Release (CMAKE_BUILD_TYPE=Release)
+
+### Simulation Output
+```
+╔══════════════════════════════════════════════╗
+║         SIMULATION RESULTS SUMMARY           ║
+╠══════════════════════════════════════════════╣
+║  Total Orders    :       9470              ║
+║  Total Trades    :       3931              ║
+║  Realized Vol    :     0.0000              ║
+║  Mean Spread(tk) :     1.0000          ║
+║  Fill Prob @1tk  :     0.0000          ║
+╠══════════════════════════════════════════════╣
+║         AGENT INVENTORY & PnL                ║
+╠══════════════════════════════════════════════╣
+║  Net Position    :          0              ║
+║  Realized PnL    :     0.0000          ║
+║  Unrealized PnL  :     0.0000        ║
+║  Total Fees      :     0.0000          ║
+║  Total PnL       :     0.0000          ║
+║  Fills           :          0              ║
+║  Buys            :          0              ║
+║  Sells           :          0              ║
+╚══════════════════════════════════════════════╝
+```
+
+### Performance Metrics
+- Wall-clock runtime: 0.1637s
+- Simulated/Real ratio: 366.46x (366.46 simulated seconds per real second)
+
+### Final Order Book State
+```
+┌─────────────────────────────────────────────┐
+│           LIMIT ORDER BOOK (L2)             │
+├──────────┬──────────────┬────────────────────┤
+│  SIDE    │  PRICE ($)   │  QUANTITY          │
+├──────────┼──────────────┼────────────────────┤
+│  ASK[0]  │      100.04  │          1779 (16 orders)   │
+│  ASK[0]  │      100.03  │          3297 (27 orders)   │
+│  ASK[0]  │      100.02  │         11189 (85 orders)   │
+│  ASK[0]  │      100.01  │         36257 (2077 orders)   │
+│  ASK[0]  │      100.00  │         17593 (529 orders)   │
+├──────────┴──────────────┴────────────────────┤
+│  mid=   99.99  spread=1.00 ticks              │
+├──────────┬──────────────┬────────────────────┤
+│  BID[0]  │       99.99  │         15800 (507 orders)   │
+│  BID[0]  │       99.98  │         38351 (2091 orders)   │
+│  BID[0]  │       99.97  │         10752 (74 orders)   │
+│  BID[0]  │       99.96  │          3031 (29 orders)   │
+│  BID[0]  │       99.95  │          2017 (23 orders)   │
+└──────────┴──────────────┴────────────────────┘
+Orders: 9470  Trades: 3931  Cancels: 0
+```
+
+---
+
 ## References
 - Cont, R. (2010). *Stochastic modeling of order books*. Quantitative Finance.
 - Avellaneda, M. & Stoikov, S. (2008). *High-frequency trading in a limit order book*. Quantitative Finance.
